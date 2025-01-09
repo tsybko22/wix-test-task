@@ -35,7 +35,7 @@ const CategoryTree: React.FC<Props> = ({ data }) => {
   }, [categories]);
 
   return (
-    <div>
+    <>
       {categories.map((category) => (
         <CategoryItem
           key={category.id}
@@ -44,7 +44,7 @@ const CategoryTree: React.FC<Props> = ({ data }) => {
           deleteCategory={deleteCategory}
         />
       ))}
-    </div>
+    </>
   );
 };
 
