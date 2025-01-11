@@ -37,3 +37,11 @@ export const recursiveUpdateCategory = (
     return category;
   });
 };
+
+export const recursiveCollapseCategory = (category: Category): Category => {
+  return {
+    ...category,
+    isExpanded: false,
+    children: category.children ? category.children.map(recursiveCollapseCategory) : [],
+  };
+};

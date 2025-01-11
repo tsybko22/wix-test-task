@@ -4,6 +4,7 @@ import { type Category } from '../../types';
 import CategoryItem from './CategoryItem';
 
 import {
+  recursiveCollapseCategory,
   recursiveDeleteCategory,
   recursiveUpdateCategory,
 } from '../../utils/categoryUtils';
@@ -27,7 +28,13 @@ const CategoryTree: React.FC<Props> = ({ data }) => {
   };
 
   const deleteCategory = (id: string) => {
-    setCategories((prevCategories) => recursiveDeleteCategory(prevCategories, id));
+    setCategories(recursiveDeleteCategory(categories, id));
+  };
+
+  const collapseCategory = (category: Category) => {
+    const updatedCategory = recursiveCollapseCategory(category);
+
+    updateCategory(updatedCategory);
   };
 
   useEffect(() => {

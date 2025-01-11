@@ -7,6 +7,7 @@ interface Props {
   category: Category;
   updateCategory: (updatedCategory: Category) => void;
   deleteCategory: (id: string) => void;
+  collapseCategory: (category: Category) => void;
   isRoot?: boolean;
 }
 
@@ -14,6 +15,7 @@ const CategoryItem: React.FC<Props> = ({
   category,
   updateCategory,
   deleteCategory,
+  collapseCategory,
   isRoot = true,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -24,6 +26,7 @@ const CategoryItem: React.FC<Props> = ({
     const newCategory: Category = {
       id: crypto.randomUUID(),
       name: 'New Subcategory',
+      isExpanded: true,
       children: [],
     };
 
@@ -47,9 +50,13 @@ const CategoryItem: React.FC<Props> = ({
   };
 
   const toggleExpanded = (category: Category) => {
-    if (category.children && category.children.length === 0) return;
+    if (category.children && category?.children.length === 0) return;
 
-    updateCategory({ ...category, isExpanded: !category.isExpanded });
+    if (category.isExpanded) {
+      collapseCategory(category);
+    } else {
+      updateCategory({ ...category, isExpanded: true });
+    }
   };
 
   const getCategoryIcon = (category: Category) => {
@@ -148,6 +155,7 @@ const CategoryItem: React.FC<Props> = ({
               category={child}
               updateCategory={updateCategory}
               deleteCategory={deleteCategory}
+              collapseCategory={collapseCategory}
               isRoot={false}
             />
           ))}
