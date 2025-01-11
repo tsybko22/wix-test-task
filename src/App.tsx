@@ -48,7 +48,7 @@ export default function App() {
   return (
     <main className='grid min-h-screen place-items-center bg-zinc-200'>
       <div className='w-[300px] rounded-md bg-white p-4 shadow-md'>
-        <CategoryTree data={data} />
+        <CategoryTree initialCategories={data} />
       </div>
     </main>
   );

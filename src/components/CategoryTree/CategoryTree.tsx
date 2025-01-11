@@ -11,20 +11,18 @@ import {
 import { loadFromLocalStorage, saveToLocalStorage } from '../../utils/localStorage';
 
 interface Props {
-  data: Category[];
+  initialCategories: Category[];
 }
 
 const LOCAL_STORAGE_KEY = 'categoryTree';
 
-const CategoryTree: React.FC<Props> = ({ data }) => {
+const CategoryTree: React.FC<Props> = ({ initialCategories }) => {
   const [categories, setCategories] = useState<Category[]>(
-    loadFromLocalStorage(LOCAL_STORAGE_KEY) || data
+    loadFromLocalStorage(LOCAL_STORAGE_KEY) || initialCategories
   );
 
   const updateCategory = (updatedCategory: Category) => {
-    setCategories((prevCategories) =>
-      recursiveUpdateCategory(prevCategories, updatedCategory)
-    );
+    setCategories(recursiveUpdateCategory(categories, updatedCategory));
   };
 
   const deleteCategory = (id: string) => {
@@ -49,6 +47,7 @@ const CategoryTree: React.FC<Props> = ({ data }) => {
           category={category}
           updateCategory={updateCategory}
           deleteCategory={deleteCategory}
+          collapseCategory={collapseCategory}
         />
       ))}
     </>
